@@ -27,7 +27,6 @@ echo "Installing packages..."
 echo
 apt update -y
 apt install -y git tmux nodejs npm fonts-powerline zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 npm i -g npm@latest
 npm i -g pnpm
@@ -59,16 +58,12 @@ apt autoremove -y
 apt autoclean -y
 
 
+# ======================= OhMyZsh =======================
+echo
+echo "Installing OhMyZsh"
+echo
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
 # ======================== goodbye ========================
-echo "
-        =================== Done! ===================
-        its a good idea to restart your system now...
-        =============================================
-
-        =============================================
-        to change the default shell to ZSH run this:
-        > chsh -s \$(which zsh)
-        =============================================
-"
-
 exit 0
