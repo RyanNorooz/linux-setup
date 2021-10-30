@@ -25,8 +25,9 @@ fi
 echo
 echo "Installing packages..."
 echo
+apt update -y
 apt install -y git tmux nodejs npm fonts-powerline zsh
-npm -g install pnpm
+npm i -g pnpm
 
 
 # ======================= OhMyZsh =======================
