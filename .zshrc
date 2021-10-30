@@ -8,5 +8,3 @@ export TERM=xterm-256color
 alias ll='ls -lF'
 alias la='ls -ACF'
 alias l='ls -CF'
-
-alias asdf='pnpm build && pnpm start'
