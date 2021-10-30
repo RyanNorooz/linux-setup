@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# ================= activate sudo mode =================
+# ================== activate sudo mode ==================
 if [ "$EUID" != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
 
 
-# ======================= welcome =======================
+# ======================== welcome ========================
 echo
 echo "wassssuuuuup....!"
 echo "script will install basic tools and setupup configs for the new user."
@@ -21,22 +21,17 @@ if [[ $REPLY =~ ^[Nn]$ ]]; then
 fi
 
 
-# ==================== install stuff ====================
+# ===================== install stuff =====================
 echo
 echo "Installing packages..."
 echo
 apt update -y
 apt install -y git tmux nodejs npm fonts-powerline zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+npm i -g npm@latest
 npm i -g pnpm
-
-
-# ======================= OhMyZsh =======================
-echo
-echo "Conjuring Zsh magic..."
-echo
-CHSH=yes
-RUNZSH=no
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+pnpm i -g pnpm@latest
 
 
 # ================ download config files ================
@@ -44,7 +39,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/RyanNorooz/dotfiles ~/.dotfiles.tmp
 
 
-# ===================== config stuff =====================
+# ====================== config stuff ======================
 echo
 echo "Configuring stuff..."
 echo
@@ -55,7 +50,7 @@ cp ~/.dotfiles.tmp/.gitconfig ~/.gitconfig
 cat .zshrc >> ~/.zshrc # append to zshrc
 
 
-# ======================= cleanup =======================
+# ======================== cleanup ========================
 echo
 echo "Cleaning up..."
 echo
@@ -64,11 +59,16 @@ apt autoremove -y
 apt autoclean -y
 
 
-# ======================= goodbye =======================
-echo
-echo "=================== Done! ==================="
-echo "its a good idea to restart your system now..."
-echo "============================================="
-echo
+# ======================== goodbye ========================
+echo "
+        =================== Done! ===================
+        its a good idea to restart your system now...
+        =============================================
+
+        =============================================
+        to change the default shell to ZSH run this:
+        > chsh -s \$(which zsh)
+        =============================================
+"
 
 exit 0
