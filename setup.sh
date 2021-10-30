@@ -25,20 +25,17 @@ fi
 echo
 echo "Installing packages..."
 echo
-apt install -y git tmux nodejs npm fonts-powerline
+apt install -y git tmux nodejs npm fonts-powerline zsh
 npm -g install pnpm
 
 
-# ========================= zsh =========================
+# ======================= OhMyZsh =======================
 echo
 echo "Conjuring Zsh magic..."
 echo
-apt install -y zsh
-chsh -s $(which zsh) # set zsh as default shell
-
-
-# ======================= OhMyZsh =======================
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+CHSH=yes
+RUNZSH=no
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 
 # ================ download config files ================
