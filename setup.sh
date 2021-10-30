@@ -35,7 +35,10 @@ echo "Conjuring Zsh magic..."
 echo
 apt install -y zsh
 chsh -s $(which zsh) # set zsh as default shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" # OhMyZsh
+
+
+# ======================= OhMyZsh =======================
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 
 # ================ download config files ================
