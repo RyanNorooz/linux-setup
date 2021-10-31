@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# ================== activate sudo mode ==================
-if [ "$EUID" != 0 ]; then
-    sudo "$0" "$@"
-    exit $?
-fi
+current_user=$(whoami)
 
-
-# ======================== welcome ========================
+# =================== welcome & notice ===================
+echo
+echo "User: $current_user"
 echo
 echo "wassssuuuuup....!"
-echo "script will install basic tools and setupup configs for the new user."
+echo "script will install basic tools and configs apps for the current user: $current_user"
 echo
 read $REPLY -p "sounds good? [y/n] "
 echo
@@ -25,8 +22,8 @@ fi
 echo
 echo "Installing packages..."
 echo
-apt update -y
-apt install -y git tmux nodejs npm fonts-powerline zsh
+sudo apt update -y
+sudo apt install -y git tmux nodejs npm fonts-powerline zsh
 
 npm i -g npm@latest
 npm i -g pnpm
@@ -42,28 +39,38 @@ git clone https://github.com/RyanNorooz/dotfiles ~/.dotfiles.tmp
 echo
 echo "Configuring stuff..."
 echo
-cp ~/.dotfiles.tmp/.tmux.conf ~/.tmux.conf
-cp ~/.dotfiles.tmp/.nanorc ~/.nanorc
-cp ~/.dotfiles.tmp/.gitconfig ~/.gitconfig
-
-cat .zshrc >> ~/.zshrc # append to zshrc
+cp ./.dotfiles.tmp/.tmux.conf ~/.tmux.conf
+cp ./.dotfiles.tmp/.nanorc ~/.nanorc
+cp ./.dotfiles.tmp/.gitconfig ~/.gitconfig
 
 
 # ======================== cleanup ========================
 echo
 echo "Cleaning up..."
 echo
-rm -r ~/.dotfiles.tmp
-apt autoremove -y
-apt autoclean -y
+sudo rm -r ./.dotfiles.tmp
+sudo apt autoremove -y
+sudo apt autoclean -y
 
 
 # ======================= OhMyZsh =======================
 echo
-echo "Installing OhMyZsh"
+echo "Installing OhMyZsh for ($currentUser)"
 echo
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+zsh_config="
+export HOME='/home/$currentUser'
+
+# fix for tmux END/HOME keys not working
+export TERM=xterm-256color
+
+# some more ls aliases
+alias ll='ls -lF'
+alias la='ls -ACF'
+alias l='ls -CF'
+"
+echo $zsh_config >> ~/.zshrc # append to zshrc
 
 # ======================== goodbye ========================
 exit 0
